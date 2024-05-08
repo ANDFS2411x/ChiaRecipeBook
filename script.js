@@ -1,16 +1,43 @@
-// script.js
+// Importa las funciones necesarias del SDK de Firebase
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getDatabase, ref, push, onChildAdded, remove } from "firebase/database";
+
+// Tu configuración de Firebase
+const firebaseConfig = {
+  apiKey: "T",
+  authDomain: "chiarecipebook.firebaseapp.com",
+  databaseURL: "https://chiarecipebook-default-rtdb.firebaseio.com",
+  projectId: "chiarecipebook",
+  storageBucket: "chiarecipebook.appspot.com",
+  messagingSenderId: "901418297920",
+  appId: "1:901418297920:web:49070f17a4084f62920da5",
+  measurementId: "G-S46YGH9RRW"
+};
+
+// Inicializa Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const database = getDatabase(app);
+
+// Obtén referencias a los elementos del formulario y la lista de recetas
 const recipeForm = document.getElementById('recipeForm');
 const recipeList = document.getElementById('recipeList');
 
-// Función para obtener las recetas almacenadas en el almacenamiento local
+// Función para obtener las recetas almacenadas en la base de datos de Firebase
 function getSavedRecipes() {
-    const savedRecipes = localStorage.getItem('recipes');
-    return savedRecipes ? JSON.parse(savedRecipes) : [];
+    // Firebase no usa almacenamiento local, obtén recetas de la base de datos
+    const recipesRef = ref(database, 'recipes');
+    const recipes = [];
+    onChildAdded(recipesRef, (snapshot) => {
+        recipes.push(snapshot.val());
+    });
+    return recipes;
 }
 
-// Función para guardar las recetas en el almacenamiento local
-function saveRecipes(recipes) {
-    localStorage.setItem('recipes', JSON.stringify(recipes));
+// Función para guardar las recetas en la base de datos de Firebase
+function saveRecipe(recipe) {
+    push(ref(database, 'recipes'), recipe);
 }
 
 // Cargar recetas al cargar la página
@@ -42,9 +69,8 @@ recipeForm.addEventListener('submit', (event) => {
 
     const recipe = { title, ingredients, instructions };
 
-    const recipes = getSavedRecipes();
-    recipes.push(recipe);
-    saveRecipes(recipes);
+    // Guarda la receta en la base de datos de Firebase
+    saveRecipe(recipe);
 
     const recipeHTML = `
         <li class="recipe">
@@ -75,9 +101,12 @@ function deleteRecipe(deleteButton) {
     const recipeListItem = deleteButton.closest('.recipe');
     const recipeTitle = recipeListItem.querySelector('h2').innerText;
 
-    let recipes = getSavedRecipes();
-    recipes = recipes.filter(recipe => recipe.title !== recipeTitle);
-    saveRecipes(recipes);
+    // Elimina la receta de la base de datos de Firebase
+    database.ref('recipes').orderByChild('title').equalTo(recipeTitle).once('value', snapshot => {
+        snapshot.forEach(childSnapshot => {
+            childSnapshot.ref.remove();
+        });
+    });
 
     recipeListItem.remove();
 }

@@ -11,34 +11,89 @@
 
     <h1>Recetario de Chía</h1>
 
-<div class="container">
-    
-    <form id="recipeForm">
-        <div class="form-group">
-            <label for="title">Título de la receta:</label>
-            <input type="text" id="title" name="title" required>
-        </div>
-        <div class="form-group">
-            <label for="ingredients">Ingredientes:</label>
-            <textarea id="ingredients" name="ingredients" rows="4" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="instructions">Instrucciones:</label>
-            <textarea id="instructions" name="instructions" rows="4" required></textarea>
-        </div>
-        <div class="center-button"> <!-- Nuevo contenedor para centrar el botón -->
-            <button id="addRecipeBtn" class="button-82-pushable" role="button">
-                <span class="button-82-shadow"></span>
-                <span class="button-82-edge"></span>
-                <span class="button-82-front text">
-                    ¡Agregar!
-                </span>
-            </button>
-        </div>
-    </form>
-    <ul id="recipeList"></ul>
-</div>
+    <div class="container">
+        
+        <form id="recipeForm">
+            <div class="form-group">
+                <label for="title">Título de la receta:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="ingredients">Ingredientes:</label>
+                <textarea id="ingredients" name="ingredients" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="instructions">Instrucciones:</label>
+                <textarea id="instructions" name="instructions" rows="4" required></textarea>
+            </div>
+            <div class="center-button">
+                <button id="addRecipeBtn" class="btn" type="submit">¡Agregar!</button>
+            </div>
+        </form>
+        <ul id="recipeList"></ul>
+    </div>
 
-<script src="script.js"></script>
+    <!-- Agrega la biblioteca de Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
+    <script>
+        // Configura Firebase con tus credenciales
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY",
+            authDomain: "TU_AUTH_DOMAIN",
+            projectId: "TU_PROJECT_ID",
+            storageBucket: "TU_STORAGE_BUCKET",
+            messagingSenderId: "TU_MESSAGING_SENDER_ID",
+            appId: "TU_APP_ID"
+        };
+
+        // Inicializa Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const database = firebase.database();
+
+        const recipeForm = document.getElementById('recipeForm');
+        const recipeList = document.getElementById('recipeList');
+
+        recipeForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const title = recipeForm.title.value;
+            const ingredients = recipeForm.ingredients.value;
+            const instructions = recipeForm.instructions.value;
+
+            // Guarda la receta en la base de datos de Firebase
+            database.ref('recipes').push({
+                title,
+                ingredients,
+                instructions
+            });
+
+            recipeForm.reset();
+        });
+
+        // Muestra las recetas guardadas en la base de datos al cargar la página
+        database.ref('recipes').on('child_added', (snapshot) => {
+            const recipe = snapshot.val();
+            const recipeHTML = `
+                <li class="recipe">
+                    <h2>${recipe.title}</h2>
+                    <div class="recipe-details">
+                        <h3>Ingredientes:</h3>
+                        <p>${recipe.ingredients}</p>
+                        <h3>Instrucciones:</h3>
+                        <p>${recipe.instructions}</p>
+                        <button class="delete-btn" onclick="deleteRecipe('${snapshot.key}')" role="button">Eliminar</button>
+                    </div>
+                </li>
+            `;
+            recipeList.insertAdjacentHTML('beforeend', recipeHTML);
+        });
+
+        // Función para eliminar una receta de la base de datos
+        function deleteRecipe(recipeId) {
+            database.ref('recipes/' + recipeId).remove();
+        }
+    </script>
 </body>
 </html>
