@@ -1,0 +1,282 @@
+body {
+    font-family: 'Great Vibes', cursive;
+    margin: 0;
+    padding: 0;
+    background-color: #fce4ec; /* Rosa claro */
+}
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 40px;
+    background: linear-gradient(145deg, #ffffff, #fce4ec);
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.container:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    text-align: center;
+    color: #f06292; /* Rosa fuerte */
+    margin-bottom: 30px;
+    font-size: 3.5rem;
+    animation: glow 2s infinite alternate;
+}
+
+.form-group {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+input[type="text"], textarea {
+    width: calc(100% - 26px);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #f48fb1; /* Rosa medio */
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    font-family: 'Great Vibes', cursive; /* Agregado para mantener la consistencia */
+}
+
+.btn, .button-82-front {
+    font-family: 'Great Vibes', cursive; /* Agregado para mantener la consistencia */
+}
+
+.btn {
+    background-color: #f06292; /* Rosa fuerte */
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    cursor: pointer;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #ec407a; /* Rosa medio */
+}
+
+.recipe {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    border: 2px solid #f48fb1; /* Rosa medio */
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+}
+
+.recipe:hover {
+    transform: translateY(-5px);
+}
+
+.recipe h2 {
+    margin-top: 0;
+    color: #f06292; /* Rosa fuerte */
+    cursor: pointer;
+    font-family: 'Great Vibes', cursive;
+    font-size: 2rem;
+}
+
+.recipe-details {
+    display: none;
+}
+
+.recipe-details p {
+    margin: 10px 0;
+    color: #f06292; /* Rosa fuerte */
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.2rem;
+}
+
+#recipeList {
+    list-style-image: url('images/hkc.png'); /* Ruta a la imagen de Hello Kitty */
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 10px rgba(240, 98, 146, 0.8), 0 0 20px rgba(240, 98, 146, 0.8), 0 0 30px rgba(240, 98, 146, 0.8);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(240, 98, 146, 0.8), 0 0 30px rgba(240, 98, 146, 0.8), 0 0 40px rgba(240, 98, 146, 0.8);
+    }
+    100% {
+        text-shadow: 0 0 10px rgba(240, 98, 146, 0.8), 0 0 20px rgba(240, 98, 146, 0.8), 0 0 30px rgba(240, 98, 146, 0.8);
+    }
+}
+
+.button-82-pushable {
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    transition: filter 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button-82-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: hsl(0deg 0% 0% / 0.25);
+    will-change: transform;
+    transform: translateY(2px);
+    transition:
+      transform
+      600ms
+      cubic-bezier(.3, .7, .4, 1);
+  }
+  
+  .button-82-edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(
+      to left,
+      hsl(340, 74%, 28%) 0%,
+      hsl(340deg 100% 32%) 8%,
+      hsl(340deg 100% 32%) 92%,
+      hsl(340, 69%, 29%) 100%
+    );
+  }
+  
+  .button-82-front {
+    display: block;
+    position: relative;
+    padding: 12px 27px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    color: white;
+    background: hsl(345, 91%, 66%);
+    will-change: transform;
+    transform: translateY(-4px);
+    transition:
+      transform
+      600ms
+      cubic-bezier(.3, .7, .4, 1.5);
+  }
+  
+  @media (min-width: 768px) {
+    .button-82-front {
+      font-size: 1.25rem;
+      padding: 12px 42px;
+    }
+  }
+  
+  .button-82-pushable:hover {
+    filter: brightness(110%);
+    -webkit-filter: brightness(110%);
+  }
+  
+  .button-82-pushable:hover .button-82-front {
+    transform: translateY(-6px);
+    transition:
+      transform
+      250ms
+      cubic-bezier(.3, .7, .4, 1.5);
+  }
+  
+  .button-82-pushable:active .button-82-front {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+  }
+  
+  .button-82-pushable:hover .button-82-shadow {
+    transform: translateY(4px);
+    transition:
+      transform
+      250ms
+      cubic-bezier(.3, .7, .4, 1.5);
+  }
+  
+  .button-82-pushable:active .button-82-shadow {
+    transform: translateY(1px);
+    transition: transform 34ms;
+  }
+  
+  .button-82-pushable:focus:not(:focus-visible) {
+    outline: none;
+  }
+  .delete-btn {
+    align-items: center;
+    background-color: #FFE7E7;
+    background-position: 0 0;
+    border: 1px solid #FEE0E0;
+    border-radius: 11px;
+    box-sizing: border-box;
+    color: #da34a8;
+    cursor: pointer;
+    display: flex;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 33.4929px;
+    list-style: outside url(https://www.smashingmagazine.com/images/bullet.svg) none;
+    padding: 2px 12px;
+    text-align: left;
+    text-decoration: none;
+    text-shadow: none;
+    text-underline-offset: 1px;
+    transition: border .2s ease-in-out,box-shadow .2s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    word-break: break-word;
+  }
+  
+  .delete-btn:active,
+  .delete-btn:hover,
+  .delete-btn:focus {
+    outline: 0;
+  }
+  
+  
+  .delete-btn:active {
+    background-color: #f247ef;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+    color: #FFFFFF;
+  }
+  
+  .delete-btn:hover {
+    background-color: #FFE3E3;
+    border-color: #FAA4A4;
+  }
+  
+  .delete-btn:active:hover,
+  .delete-btn:focus:hover,
+  .delete-btn:focus {
+    background-color: #f569d5;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+    color: #FFFFFF;
+  }
+  .center-button {
+    text-align: center;
+}
