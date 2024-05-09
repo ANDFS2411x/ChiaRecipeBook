@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recetario de Chía</title>
     <link rel="stylesheet" href="styles.css">
-    
 </head>
 <body>
-
+    <!-- Titulo de la pagina -->
     <h1>Recetario de Chía</h1>
 
     <div class="container">
-        
         <form id="recipeForm">
             <div class="form-group">
                 <label for="title">Título de la receta:</label>
@@ -26,17 +24,23 @@
                 <label for="instructions">Instrucciones:</label>
                 <textarea id="instructions" name="instructions" rows="4" required></textarea>
             </div>
-            <div class="center-button">
-                <button id="addRecipeBtn" class="btn" type="submit">¡Agregar!</button>
+            
+            <div class="center-button"> <!-- Nuevo contenedor para centrar el botón -->
+                <button id="addRecipeBtn" class="button-82-pushable" role="button">
+                    <span class="button-82-shadow"></span>
+                    <span class="button-82-edge"></span>
+                    <span class="button-82-front text">
+                        ¡Agregar!
+                    </span>
+                </button>
             </div>
+            
         </form>
         <ul id="recipeList"></ul>
     </div>
+      <!-- Script for database in Firebase Realtime Database -->
+    <script type="module" src="script.js"></script>
+  
 
-    <!-- Agrega la biblioteca de Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>

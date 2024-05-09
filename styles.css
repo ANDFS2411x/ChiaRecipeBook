@@ -280,3 +280,36 @@ input[type="text"], textarea {
   .center-button {
     text-align: center;
 }
+.recipe-content {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f48fb1; /* Rosa medio */
+    border-radius: 12px;
+    margin-bottom: 20px;
+    padding: 10px;
+    transition: max-height 0.3s ease-out;
+    overflow: hidden;
+}
+
+.recipe-content.show {
+    max-height: 1000px; /* Altura máxima para mostrar completamente el contenido */
+}
+
+.recipe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-btn {
+    background-color: #f06292; /* Rosa fuerte */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.toggle-btn:hover {
+    background-color: #ec407a; /* Rosa medio */
+}
