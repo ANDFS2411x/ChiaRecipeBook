@@ -100,6 +100,10 @@ input[type="text"], textarea {
     display: none;
 }
 
+.recipe-details.active {
+  display: block;
+}
+
 .recipe-details p {
     margin: 10px 0;
     color: #f06292; /* Rosa fuerte */
