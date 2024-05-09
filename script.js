@@ -32,9 +32,9 @@ recipeForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const title = recipeForm.title.value;
-  const ingredients = recipeForm.ingredients.value.split('\n');
+  const ingredients = recipeForm.ingredients.value;
 
-  const instructions = recipeForm.instructions.value.split('\n);
+  const instructions = recipeForm.instructions.value;
 
   // Agrega la nueva receta a la base de datos
   const newRecipeRef = push(ref(database, "recipes"));
