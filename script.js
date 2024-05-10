@@ -61,15 +61,17 @@ onChildAdded(ref(database, "recipes"), (snapshot) => {
     recipeItem.remove();
   });
 
-  console.log(recipe);
+  // Reemplazar los saltos de línea con <br> en los ingredientes e instrucciones
+  const ingredientsHTML = recipe.ingredients.replace(/\n/g, "<br>");
+  const instructionsHTML = recipe.instructions.replace(/\n/g, "<br>");
 
   recipeItem.innerHTML = `
         <h2>${recipe.title}</h2>
         <div class="recipe-details">
             <h3>Ingredientes:</h3>
-            <p>${recipe.ingredients}</p>
+            <p>${ingredientsHTML}</p>
             <h3>Instrucciones:</h3>
-            <p>${recipe.instructions}</p>
+            <p>${instructionsHTML}</p>
         </div>
     `;
 
@@ -82,3 +84,4 @@ onChildAdded(ref(database, "recipes"), (snapshot) => {
   recipeItem.appendChild(deleteBtn);
   recipeList.appendChild(recipeItem);
 });
+
