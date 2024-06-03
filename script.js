@@ -1,5 +1,5 @@
 // Importa las funciones necesarias desde Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
 import {
   getDatabase,
   ref,
@@ -7,7 +7,9 @@ import {
   set,
   onChildAdded,
   remove,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
+
+// Tu configuración de Firebase
   // Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyDf3D-9xE4Sr7WCaHOugxgKojAG_JlrjU0",
@@ -83,4 +85,3 @@ onChildAdded(ref(database, "recipes"), (snapshot) => {
   recipeItem.appendChild(deleteBtn);
   recipeList.appendChild(recipeItem);
 });
-
