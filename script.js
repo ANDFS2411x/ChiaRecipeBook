@@ -1,5 +1,5 @@
 // Importa las funciones necesarias desde Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getDatabase,
   ref,
@@ -7,17 +7,16 @@ import {
   set,
   onChildAdded,
   remove,
-} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
-
-// Tu configuración de Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyAkyOgsZBAD6E1P0nlxTs4_5XO3FYyOed4",
-  authDomain: "chiarecipeboook.firebaseapp.com",
-  projectId: "chiarecipeboook",
-  storageBucket: "chiarecipeboook.appspot.com",
-  messagingSenderId: "252717458095",
-  appId: "1:252717458095:web:4eef3ce12bcea4e087ea5a",
-};
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDf3D-9xE4Sr7WCaHOugxgKojAG_JlrjU0",
+    authDomain: "chiadatabaserecipebook.firebaseapp.com",
+    projectId: "chiadatabaserecipebook",
+    storageBucket: "chiadatabaserecipebook.appspot.com",
+    messagingSenderId: "812746267583",
+    appId: "1:812746267583:web:91c36c3c519bc493d91f0a"
+  };
 
 // Inicializa Firebase
 const app = initializeApp(firebaseConfig);
