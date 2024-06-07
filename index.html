@@ -6,7 +6,135 @@
     <title>Recetario de Chía</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Estilos adicionales para el botón */
+        body {
+            font-family: 'Great Vibes', cursive;
+            margin: 0;
+            padding: 0;
+            background-color: #fce4ec; /* Rosa claro */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: linear-gradient(145deg, #ffffff, #fce4ec);
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #f06292; /* Rosa fuerte */
+            margin-bottom: 30px;
+            font-size: 3.5rem;
+            animation: glow 2s infinite alternate;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"], textarea {
+            width: calc(100% - 26px);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #f48fb1; /* Rosa medio */
+            box-sizing: border-box;
+            font-size: 1.2rem;
+            font-family: 'Great Vibes', cursive; /* Agregado para mantener la consistencia */
+        }
+
+        .btn, .button-82-front {
+            font-family: 'Great Vibes', cursive; /* Agregado para mantener la consistencia */
+        }
+
+        .btn {
+            background-color: #f06292; /* Rosa fuerte */
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: #ec407a; /* Rosa medio */
+        }
+
+        .recipe {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            border: 2px solid #f48fb1; /* Rosa medio */
+            position: relative;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .recipe:hover {
+            transform: translateY(-5px);
+        }
+
+        .recipe h2 {
+            margin-top: 0;
+            color: #f06292; /* Rosa fuerte */
+            cursor: pointer;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+        }
+
+        .recipe-details {
+            display: none;
+        }
+
+        .recipe-details.active {
+            display: block;
+        }
+
+        .recipe-details p {
+            margin: 10px 0;
+            color: #f06292; /* Rosa fuerte */
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.2rem;
+        }
+
+        #recipeList {
+            list-style-image: url('images/hkc.png'); /* Ruta a la imagen de Hello Kitty */
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 10px rgba(240, 98, 146, 0.8), 0 0 20px rgba(240, 98, 146, 0.8), 0 0 30px rgba(240, 98, 146, 0.8);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(240, 98, 146, 0.8), 0 0 30px rgba(240, 98, 146, 0.8), 0 0 40px rgba(240, 98, 146, 0.8);
+            }
+            100% {
+                text-shadow: 0 0 10px rgba(240, 98, 146, 0.8), 0 0 20px rgba(240, 98, 146, 0.8), 0 0 30px rgba(240, 98, 146, 0.8);
+            }
+        }
+
         .button-82-pushable {
             position: relative;
             border: none;
@@ -42,10 +170,10 @@
             border-radius: 12px;
             background: linear-gradient(
                 to left,
-                hsl(340, 100%, 85%) 0%,  /* Ajustado para un tono más rosado claro */
-                hsl(340, 100%, 75%) 8%,  /* Ajustado para un tono más rosado claro */
-                hsl(340, 100%, 75%) 92%, /* Ajustado para un tono más rosado claro */
-                hsl(340, 100%, 85%) 100% /* Ajustado para un tono más rosado claro */
+                hsl(340, 100%, 75%) 0%,  /* Ajustado para un tono más rosado claro */
+                hsl(340, 100%, 65%) 8%,  /* Ajustado para un tono más rosado claro */
+                hsl(340, 100%, 65%) 92%, /* Ajustado para un tono más rosado claro */
+                hsl(340, 100%, 75%) 100%  /* Ajustado para un tono más rosado claro */
             );
         }
 
@@ -56,7 +184,7 @@
             border-radius: 12px;
             font-size: 1.1rem;
             color: white;
-            background: hsl(345, 100%, 75%); /* Ajustado para un tono más rosado claro */
+            background: hsl(345, 91%, 66%);
             will-change: transform;
             transform: translateY(-4px);
             transition: transform 600ms cubic-bezier(.3, .7, .4, 1.5);
@@ -172,6 +300,30 @@
 
         .form-group select:hover {
             background-color: #ec407a; /* Rosa medio */
+        }
+
+        @media (max-width: 600px) {
+            .form-group label {
+                font-size: 1rem;
+            }
+
+            input[type="text"], textarea {
+                font-size: 1rem;
+            }
+
+            .btn {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+
+            .button-82-front {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
         }
 
     </style>
