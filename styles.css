@@ -164,13 +164,14 @@ input[type="text"], textarea {
     height: 100%;
     border-radius: 12px;
     background: linear-gradient(
-      to left,
-      hsl(340, 74%, 28%) 0%,
-      hsl(340deg 100% 32%) 8%,
-      hsl(340deg 100% 32%) 92%,
-      hsl(340, 69%, 29%) 100%
+        to left,
+        hsl(340, 100%, 75%) 0%,  /* Ajustado para un tono más rosado claro */
+        hsl(340, 100%, 65%) 8%,  /* Ajustado para un tono más rosado claro */
+        hsl(340, 100%, 65%) 92%, /* Ajustado para un tono más rosado claro */
+        hsl(340, 100%, 75%) 100%  /* Ajustado para un tono más rosado claro */
     );
-  }
+}
+
   
   .button-82-front {
     display: block;
