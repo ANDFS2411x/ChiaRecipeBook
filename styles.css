@@ -1,153 +1,411 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import {
-    getDatabase,
-    ref,
-    push,
-    set,
-    onChildAdded,
-    remove,
-} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
-
-// Tu configuración de Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyDf3D-9xE4Sr7WCaHOugxgKojAG_JlrjU0",
-    authDomain: "chiadatabaserecipebook.firebaseapp.com",
-    projectId: "chiadatabaserecipebook",
-    storageBucket: "chiadatabaserecipebook.appspot.com",
-    messagingSenderId: "812746267583",
-    appId: "1:812746267583:web:91c36c3c519bc493d91f0a"
-};
-
-// Inicializa Firebase
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
-
-// Resto del código JavaScript
-const recipeForm = document.getElementById("recipeForm");
-const recipeList = document.getElementById("recipeList");
-const searchBar = document.getElementById("searchBar");
-const confettiContainer = document.getElementById("confetti-container");
-
-let recipes = [];
-
-recipeForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const title = recipeForm.title.value;
-    const ingredients = recipeForm.ingredients.value;
-    const instructions = recipeForm.instructions.value;
-    const category = recipeForm.category.value;
-
-    const newRecipeRef = push(ref(database, "recipes"));
-    set(newRecipeRef, {
-        title: title,
-        ingredients: ingredients,
-        instructions: instructions,
-        category: category,
-    });
-
-    recipeForm.reset();
-
-    triggerConfetti(category);
-});
-
-onChildAdded(ref(database, "recipes"), (snapshot) => {
-    const recipe = snapshot.val();
-    recipes.push({ ...recipe, id: snapshot.key });
-    displayRecipes(recipes);
-});
-
-searchBar.addEventListener("input", (e) => {
-    filterAndDisplayRecipes();
-});
-
-document.querySelectorAll('.tab-button').forEach(button => {
-    button.addEventListener('click', () => {
-        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        
-        const category = button.getAttribute('data-category');
-        filterAndDisplayRecipes(category);
-    });
-});
-
-function filterAndDisplayRecipes(category = 'all') {
-    const searchTerm = searchBar.value.toLowerCase();
-    
-    const filteredRecipes = recipes.filter(recipe => {
-        const matchesSearch = recipe.title.toLowerCase().includes(searchTerm) ||
-                              recipe.ingredients.toLowerCase().includes(searchTerm) ||
-                              recipe.instructions.toLowerCase().includes(searchTerm);
-        const matchesCategory = category === 'all' || recipe.category === category;
-        return matchesSearch && matchesCategory;
-    });
-
-    displayRecipes(filteredRecipes);
+body {
+  font-family: 'Great Vibes', cursive;
+  margin: 0;
+  padding: 0;
+  background-color: #fce4ec; /* Rosa claro */
 }
 
-function displayRecipes(recipesToDisplay) {
-    recipeList.innerHTML = "";
-    recipesToDisplay.forEach(recipe => {
-        const recipeItem = document.createElement("li");
-        recipeItem.classList.add("recipe");
-        recipeItem.setAttribute('data-category', recipe.category);
-
-        const deleteBtn = document.createElement("button");
-        deleteBtn.classList.add("delete-btn");
-        deleteBtn.textContent = "Eliminar";
-        deleteBtn.addEventListener("click", () => {
-            const confirmation = confirm("¿Estás seguro de que deseas eliminar esta receta?");
-            if (confirmation) {
-                remove(ref(database, "recipes/" + recipe.id));
-                recipes = recipes.filter(r => r.id !== recipe.id);
-                displayRecipes(recipes);
-            }
-        });
-
-        const ingredientsHTML = recipe.ingredients.replace(/\n/g, "<br>");
-        const instructionsHTML = recipe.instructions.replace(/\n/g, "<br>");
-
-        recipeItem.innerHTML = `
-            <h2>${recipe.title}</h2>
-            <div class="recipe-details">
-                <h3>Categoría: ${recipe.category}</h3>
-                <h3>Ingredientes:</h3>
-                <p>${ingredientsHTML}</p>
-                <h3>Instrucciones:</h3>
-                <p>${instructionsHTML}</p>
-            </div>
-        `;
-
-        recipeItem.addEventListener("click", () => {
-            const recipeDetails = recipeItem.querySelector(".recipe-details");
-            recipeDetails.classList.toggle("active");
-        });
-
-        recipeItem.appendChild(deleteBtn);
-        recipeList.appendChild(recipeItem);
-    });
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 40px;
+  background: linear-gradient(145deg, #ffffff, #fce4ec);
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
 }
 
-function triggerConfetti(category) {
-    const confettiType = {
-        "Pasteleria Plant Based": "🍓",
-        "Cocina Plant Based": "🌱",
-        "Cocina Vegetariana": "🌿",
-        "Pasteleria": "🎂"
-    };
+.container:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
 
-    const confettiSymbol = confettiType[category] || "✨";
+h1 {
+  text-align: center;
+  color: #f06292; /* Rosa fuerte */
+  margin-bottom: 30px;
+  font-size: 3.5rem;
+  animation: glow 2s infinite alternate;
+}
 
-    for (let i = 0; i < 100; i++) {
-        const confetti = document.createElement('div');
-        confetti.classList.add('confetti');
-        confetti.innerText = confettiSymbol;
-        confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.animationDuration = Math.random() * 2 + 3 + 's';
-        confettiContainer.appendChild(confetti);
-    }
+.form-group {
+  margin-bottom: 30px;
+  text-align: center;
+}
 
-    setTimeout(() => {
-        confettiContainer.innerHTML = '';
-    }, 5000);
+label {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+input[type="text"], textarea {
+  width: calc(100% - 26px);
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #f48fb1; /* Rosa medio */
+  box-sizing: border-box;
+  font-size: 1.2rem;
+  font-family: 'Great Vibes', cursive; /* Agregado para mantener la consistencia */
+}
+
+.btn, .button-82-front {
+  font-family: 'Great Vibes', cursive; /* Agregado para mantener la consistencia */
+}
+
+.btn {
+  background-color: #f06292; /* Rosa fuerte */
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  cursor: pointer;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #ec407a; /* Rosa medio */
+}
+
+.recipe {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  border: 2px solid #f48fb1; /* Rosa medio */
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+}
+
+.recipe:hover {
+  transform: translateY(-5px);
+}
+
+.recipe h2 {
+  margin-top: 0;
+  color: #f06292; /* Rosa fuerte */
+  cursor: pointer;
+  font-family: 'Great Vibes', cursive;
+  font-size: 2rem;
+}
+
+.recipe-details {
+  display: none;
+}
+
+.recipe-details.active {
+  display: block;
+}
+
+.recipe-details p {
+  margin: 10px 0;
+  color: #f06292; /* Rosa fuerte */
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.2rem;
+}
+
+#recipeList {
+  list-style-image: url('images/hkc.png'); /* Ruta a la imagen de Hello Kitty */
+}
+
+@keyframes glow {
+  0% {
+      text-shadow: 0 0 10px rgba(240, 98, 146, 0.8), 0 0 20px rgba(240, 98, 146, 0.8), 0 0 30px rgba(240, 98, 146, 0.8);
+  }
+  50% {
+      text-shadow: 0 0 20px rgba(240, 98, 146, 0.8), 0 0 30px rgba(240, 98, 146, 0.8), 0 0 40px rgba(240, 98, 146, 0.8);
+  }
+  100% {
+      text-shadow: 0 0 10px rgba(240, 98, 146, 0.8), 0 0 20px rgba(240, 98, 146, 0.8), 0 0 30px rgba(240, 98, 146, 0.8);
+  }
+}
+
+.button-82-pushable {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  outline-offset: 4px;
+  transition: filter 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-82-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: hsl(0deg 0% 0% / 0.25);
+  will-change: transform;
+  transform: translateY(2px);
+  transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.button-82-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(
+      to left,
+      hsl(340, 100%, 75%) 0%,  /* Ajustado para un tono más rosado claro */
+      hsl(340, 100%, 65%) 8%,  /* Ajustado para un tono más rosado claro */
+      hsl(340, 100%, 65%) 92%, /* Ajustado para un tono más rosado claro */
+      hsl(340, 100%, 75%) 100%  /* Ajustado para un tono más rosado claro */
+  );
+}
+
+.button-82-front {
+  display: block;
+  position: relative;
+  padding: 12px 27px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  color: white;
+  background: hsl(345, 91%, 66%);
+  will-change: transform;
+  transform: translateY(-4px);
+  transition: transform 600ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+@media (min-width: 768px) {
+  .button-82-front {
+      font-size: 1.25rem;
+      padding: 12px 42px;
+  }
+}
+
+.button-82-pushable:hover {
+  filter: brightness(110%);
+  -webkit-filter: brightness(110%);
+}
+
+.button-82-pushable:hover .button-82-front {
+  transform: translateY(-6px);
+  transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button-82-pushable:active .button-82-front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+}
+
+.button-82-pushable:hover .button-82-shadow {
+  transform: translateY(4px);
+  transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button-82-pushable:active .button-82-shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+.button-82-pushable:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.center-button {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.search-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.search-container input {
+  width: 80%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #f06292; /* Rosa fuerte */
+  text-align: center; /* Agregado para centrar el texto */
+}
+
+.form-group input[type="text"], .form-group textarea, .form-group select {
+  width: calc(100% - 22px);
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #f48fb1; /* Rosa medio */
+  font-size: 1rem;
+  font-family: 'Great Vibes', cursive; /* Agregado para mantener la consistencia */
+  background-color: #fff;
+}
+
+.form-group select {
+  background-color: #f48fb1; /* Rosa medio */
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.form-group select:hover {
+  background-color: #ec407a; /* Rosa medio */
+}
+
+@media (max-width: 600px) {
+  .form-group label {
+      font-size: 1rem;
+  }
+
+  input[type="text"], textarea {
+      font-size: 1rem;
+  }
+
+  .btn {
+      font-size: 1rem;
+      padding: 10px 20px;
+  }
+
+  .button-82-front {
+      font-size: 1rem;
+      padding: 10px 20px;
+  }
+
+  h1 {
+      font-size: 2.5rem;
+  }
+}
+
+/* Estilos para las pestañas */
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab-button {
+  background-color: #f06292;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 5px;
+  transition: background-color 0.3s ease;
+  flex: 1 1 auto;
+}
+
+.tab-button:hover {
+  background-color: #ec407a;
+}
+
+.tab-button.active {
+  background-color: #d81b60;
+}
+
+.tab-button[data-category="Cocina Plant Based"] {
+  background-color: #a8e6cf; /* Verde pastel */
+}
+
+.tab-button[data-category="Cocina Vegetariana"] {
+  background-color: #dcedc1; /* Verde diferente */
+}
+
+.tab-button[data-category="Pasteleria"] {
+  background-color: #f8bbd0; /* Rosa más claro */
+}
+
+.delete-btn {
+  align-items: center;
+  background-color: #FFE7E7;
+  background-position: 0 0;
+  border: 1px solid #FEE0E0;
+  border-radius: 11px;
+  box-sizing: border-box;
+  color: #da34a8;
+  cursor: pointer;
+  display: flex;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 33.4929px;
+  list-style: outside url(https://www.smashingmagazine.com/images/bullet.svg) none;
+  padding: 2px 12px;
+  text-align: left;
+  text-decoration: none;
+  text-shadow: none;
+  text-underline-offset: 1px;
+  transition: border .2s ease-in-out,box-shadow .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  word-break: break-word;
+}
+
+.delete-btn:active,
+.delete-btn:hover,
+.delete-btn:focus {
+  outline: 0;
+}
+
+.delete-btn:active {
+  background-color: #f247ef;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+  color: #FFFFFF;
+}
+
+.delete-btn:hover {
+  background-color: #FFE3E3;
+  border-color: #FAA4A4;
+}
+
+.delete-btn:active:hover,
+.delete-btn:focus:hover,
+.delete-btn:focus {
+  background-color: #f569d5;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+  color: #FFFFFF;
+}
+
+#confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+.confetti {
+  position: fixed;
+  top: -10px;
+  font-size: 24px;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to {
+      transform: translateY(100vh) rotate(360deg);
+  }
 }
