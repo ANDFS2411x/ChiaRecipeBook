@@ -3,330 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Recetario de Chía - Encuentra y comparte las mejores recetas plant based, vegetarianas y de pastelería por parte de Sofía Mayor.">
     <title>Recetario de Chía</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: 'Great Vibes', cursive;
-            margin: 0;
-            padding: 0;
-            background-color: #fce4ec; /* Rosa claro */
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 40px;
-            background: linear-gradient(145deg, #ffffff, #fce4ec);
-            border-radius: 15px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease-in-out;
-        }
-
-        .container:hover {
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            text-align: center;
-            color: #f06292; /* Rosa fuerte */
-            margin-bottom: 30px;
-            font-size: 3.5rem;
-            animation: glow 2s infinite alternate;
-        }
-
-        .form-group {
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        label {
-            display: block;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        input[type="text"], textarea {
-            width: calc(100% - 26px);
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid #f48fb1; /* Rosa medio */
-            box-sizing: border-box;
-            font-size: 1.2rem;
-            font-family: 'Great Vibes', cursive; /* Agregado para mantener la consistencia */
-        }
-
-        .btn, .button-82-front {
-            font-family: 'Great Vibes', cursive; /* Agregado para mantener la consistencia */
-        }
-
-        .btn {
-            background-color: #f06292; /* Rosa fuerte */
-            color: #fff;
-            border: none;
-            padding: 15px 30px;
-            cursor: pointer;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-block;
-            margin-left: auto;
-            margin-right: auto;
-            font-size: 1.2rem;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        .btn:hover {
-            background-color: #ec407a; /* Rosa medio */
-        }
-
-        .recipe {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            cursor: pointer;
-            border: 2px solid #f48fb1; /* Rosa medio */
-            position: relative;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .recipe:hover {
-            transform: translateY(-5px);
-        }
-
-        .recipe h2 {
-            margin-top: 0;
-            color: #f06292; /* Rosa fuerte */
-            cursor: pointer;
-            font-family: 'Great Vibes', cursive;
-            font-size: 2rem;
-        }
-
-        .recipe-details {
-            display: none;
-        }
-
-        .recipe-details.active {
-            display: block;
-        }
-
-        .recipe-details p {
-            margin: 10px 0;
-            color: #f06292; /* Rosa fuerte */
-            font-family: 'Great Vibes', cursive;
-            font-size: 1.2rem;
-        }
-
-        #recipeList {
-            list-style-image: url('images/hkc.png'); /* Ruta a la imagen de Hello Kitty */
-        }
-
-        @keyframes glow {
-            0% {
-                text-shadow: 0 0 10px rgba(240, 98, 146, 0.8), 0 0 20px rgba(240, 98, 146, 0.8), 0 0 30px rgba(240, 98, 146, 0.8);
-            }
-            50% {
-                text-shadow: 0 0 20px rgba(240, 98, 146, 0.8), 0 0 30px rgba(240, 98, 146, 0.8), 0 0 40px rgba(240, 98, 146, 0.8);
-            }
-            100% {
-                text-shadow: 0 0 10px rgba(240, 98, 146, 0.8), 0 0 20px rgba(240, 98, 146, 0.8), 0 0 30px rgba(240, 98, 146, 0.8);
-            }
-        }
-
-        .button-82-pushable {
-            position: relative;
-            border: none;
-            background: transparent;
-            padding: 0;
-            cursor: pointer;
-            outline-offset: 4px;
-            transition: filter 250ms;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
-        }
-
-        .button-82-shadow {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 12px;
-            background: hsl(0deg 0% 0% / 0.25);
-            will-change: transform;
-            transform: translateY(2px);
-            transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
-        }
-
-        .button-82-edge {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 12px;
-            background: linear-gradient(
-                to left,
-                hsl(340, 100%, 75%) 0%,  /* Ajustado para un tono más rosado claro */
-                hsl(340, 100%, 65%) 8%,  /* Ajustado para un tono más rosado claro */
-                hsl(340, 100%, 65%) 92%, /* Ajustado para un tono más rosado claro */
-                hsl(340, 100%, 75%) 100%  /* Ajustado para un tono más rosado claro */
-            );
-        }
-
-        .button-82-front {
-            display: block;
-            position: relative;
-            padding: 12px 27px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            color: white;
-            background: hsl(345, 91%, 66%);
-            will-change: transform;
-            transform: translateY(-4px);
-            transition: transform 600ms cubic-bezier(.3, .7, .4, 1.5);
-        }
-
-        @media (min-width: 768px) {
-            .button-82-front {
-                font-size: 1.25rem;
-                padding: 12px 42px;
-            }
-        }
-
-        .button-82-pushable:hover {
-            filter: brightness(110%);
-            -webkit-filter: brightness(110%);
-        }
-
-        .button-82-pushable:hover .button-82-front {
-            transform: translateY(-6px);
-            transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
-        }
-
-        .button-82-pushable:active .button-82-front {
-            transform: translateY(-2px);
-            transition: transform 34ms;
-        }
-
-        .button-82-pushable:hover .button-82-shadow {
-            transform: translateY(4px);
-            transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
-        }
-
-        .button-82-pushable:active .button-82-shadow {
-            transform: translateY(1px);
-            transition: transform 34ms;
-        }
-
-        .button-82-pushable:focus:not(:focus-visible) {
-            outline: none;
-        }
-
-        .center-button {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        /* Estilos adicionales para la barra de búsqueda */
-        .search-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .search-container input {
-            width: 80%;
-            padding: 10px;
-            font-size: 1rem;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        /* Estilos adicionales para el sistema de clasificación */
-        .filter-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .filter-container select {
-            padding: 10px;
-            font-size: 1rem;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            background-color: #f48fb1; /* Rosa medio */
-            color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        .filter-container select:hover {
-            background-color: #ec407a; /* Rosa medio */
-        }
-
-        /* Estilos adicionales para el formulario */
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #f06292; /* Rosa fuerte */
-            text-align: center; /* Agregado para centrar el texto */
-        }
-
-        .form-group input[type="text"], .form-group textarea, .form-group select {
-            width: calc(100% - 22px);
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #f48fb1; /* Rosa medio */
-            font-size: 1rem;
-            font-family: 'Great Vibes', cursive; /* Agregado para mantener la consistencia */
-            background-color: #fff;
-        }
-
-        .form-group select {
-            background-color: #f48fb1; /* Rosa medio */
-            color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        .form-group select:hover {
-            background-color: #ec407a; /* Rosa medio */
-        }
-
-        @media (max-width: 600px) {
-            .form-group label {
-                font-size: 1rem;
-            }
-
-            input[type="text"], textarea {
-                font-size: 1rem;
-            }
-
-            .btn {
-                font-size: 1rem;
-                padding: 10px 20px;
-            }
-
-            .button-82-front {
-                font-size: 1rem;
-                padding: 10px 20px;
-            }
-
-            h1 {
-                font-size: 2.5rem;
-            }
-        }
-
-    </style>
 </head>
 <body>
     <!-- Titulo de la pagina -->
@@ -334,41 +13,40 @@
 
     <!-- Barra de búsqueda -->
     <div class="search-container">
-        <input type="text" id="searchBar" placeholder="Buscar recetas...">
+        <input type="text" id="searchBar" placeholder="Buscar recetas..." aria-label="Buscar recetas">
     </div>
 
-    <!-- Filtros -->
-    <div class="filter-container">
-        <select id="categoryFilter">
-            <option value="">Todas las categorías</option>
-            <option value="desayuno">Desayuno</option>
-            <option value="almuerzo">Almuerzo</option>
-            <option value="cena">Cena</option>
-            <option value="postre">Postre</option>
-        </select>
+    <!-- Pestañas para categorías -->
+    <div class="tabs">
+        <button class="tab-button active" data-category="all">Todas las categorías</button>
+        <button class="tab-button" data-category="Pasteleria Plant Based">Pastelería Plant Based</button>
+        <button class="tab-button" data-category="Cocina Plant Based">Cocina Plant Based</button>
+        <button class="tab-button" data-category="Cocina Vegetariana">Cocina Vegetariana</button>
+        <button class="tab-button" data-category="Pasteleria">Pastelería</button>
     </div>
 
     <div class="container">
-        <form id="recipeForm">
+        <form id="recipeForm" novalidate>
             <div class="form-group">
                 <label for="title">Título de la receta:</label>
                 <input type="text" id="title" name="title" required>
             </div>
             <div class="form-group">
                 <label for="ingredients">Ingredientes:</label>
-                <textarea id="ingredients" name="ingredients" rows="4" required style="white-space: pre-line;"></textarea>
+                <textarea id="ingredients" name="ingredients" rows="4" required></textarea>
             </div>
             <div class="form-group">
                 <label for="instructions">Instrucciones:</label>
-                <textarea id="instructions" name="instructions" rows="4" required style="white-space: pre-line;"></textarea>
+                <textarea id="instructions" name="instructions" rows="4" required></textarea>
             </div>
             <div class="form-group">
                 <label for="category">Categoría:</label>
                 <select id="category" name="category" required>
-                    <option value="desayuno">Desayuno</option>
-                    <option value="almuerzo">Almuerzo</option>
-                    <option value="cena">Cena</option>
-                    <option value="postre">Postre</option>
+                    <option value="">Todas las categorías</option>
+                    <option value="Pasteleria Plant Based">Pastelería Plant Based</option>
+                    <option value="Cocina Plant Based">Cocina Plant Based</option>
+                    <option value="Cocina Vegetariana">Cocina Vegetariana</option>
+                    <option value="Pasteleria">Pastelería</option>
                 </select>
             </div>
             <div class="center-button">
@@ -383,6 +61,8 @@
         </form>
         <ul id="recipeList"></ul>
     </div>
+
+    <div id="confetti-container"></div>
 
     <!-- Script for database in Firebase Realtime Database -->
     <script type="module" src="script.js"></script>
