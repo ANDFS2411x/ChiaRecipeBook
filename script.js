@@ -133,7 +133,8 @@ function triggerConfetti(category) {
         "Pasteleria Plant Based": "🍓",
         "Cocina Plant Based": "🌱",
         "Cocina Vegetariana": "🌿",
-        "Pasteleria": "🎂"
+        "Pasteleria": "🎂",
+        "Panaderia": "🥐"
     };
 
     const confettiSymbol = confettiType[category] || "✨";
