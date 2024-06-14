@@ -33,22 +33,27 @@ let recipes = [];
 recipeForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const title = recipeForm.title.value;
-    const ingredients = recipeForm.ingredients.value;
-    const instructions = recipeForm.instructions.value;
+    const title = recipeForm.title.value.trim();
+    const ingredients = formatIngredients(recipeForm.ingredients.value.trim());
+    const instructions = recipeForm.instructions.value.trim();
     const category = recipeForm.category.value;
+
+    if (!title || !ingredients || !instructions || !category) {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }
 
     const newRecipeRef = push(ref(database, "recipes"));
     set(newRecipeRef, {
-        title: title,
-        ingredients: ingredients,
-        instructions: instructions,
-        category: category,
+        title,
+        ingredients,
+        instructions,
+        category,
     });
 
     recipeForm.reset();
-
     triggerConfetti(category);
+    alert("¡Receta agregada exitosamente!");
 });
 
 onChildAdded(ref(database, "recipes"), (snapshot) => {
@@ -126,6 +131,10 @@ function displayRecipes(recipesToDisplay) {
         recipeItem.appendChild(deleteBtn);
         recipeList.appendChild(recipeItem);
     });
+}
+
+function formatIngredients(ingredients) {
+    return ingredients.split('\n').map(ingredient => `• ${ingredient}`).join('\n');
 }
 
 function triggerConfetti(category) {
