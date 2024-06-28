@@ -10,12 +10,12 @@ import {
 
 // Tu configuración de Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyDf3D-9xE4Sr7WCaHOugxgKojAG_JlrjU0",
-    authDomain: "chiadatabaserecipebook.firebaseapp.com",
-    projectId: "chiadatabaserecipebook",
-    storageBucket: "chiadatabaserecipebook.appspot.com",
-    messagingSenderId: "812746267583",
-    appId: "1:812746267583:web:91c36c3c519bc493d91f0a"
+  apiKey: "AIzaSyDOhX5Hp5FebG5c5s_F_AOUN1ktVhmBTu4",
+  authDomain: "basededatoschiajunio.firebaseapp.com",
+  projectId: "basededatoschiajunio",
+  storageBucket: "basededatoschiajunio.appspot.com",
+  messagingSenderId: "203333011129",
+  appId: "1:203333011129:web:59550a97ee6941fc7d3d68"
 };
 
 // Inicializa Firebase
