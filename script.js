@@ -6,6 +6,7 @@ import {
     set,
     onChildAdded,
     remove,
+    update
 } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
 
 // Tu configuración de Firebase
@@ -18,16 +19,13 @@ const firebaseConfig = {
   appId: "1:274917255111:web:f2043d88ca8b566b2d1be2"
 };
 
-
 // Inicializa Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-// Resto del código JavaScript
 const recipeForm = document.getElementById("recipeForm");
 const recipeList = document.getElementById("recipeList");
 const searchBar = document.getElementById("searchBar");
-const confettiContainer = document.getElementById("confetti-container");
 
 let recipes = [];
 
@@ -38,23 +36,36 @@ recipeForm.addEventListener("submit", (event) => {
     const ingredients = formatIngredients(recipeForm.ingredients.value.trim());
     const instructions = recipeForm.instructions.value.trim();
     const category = recipeForm.category.value;
+    const recipeId = recipeForm.dataset.id; // Obtener el id de la receta si está en modo de edición
 
     if (!title || !ingredients || !instructions || !category) {
         alert("Por favor, completa todos los campos.");
         return;
     }
 
-    const newRecipeRef = push(ref(database, "recipes"));
-    set(newRecipeRef, {
-        title,
-        ingredients,
-        instructions,
-        category,
-    });
+    if (recipeId) { // Modo edición
+        const recipeRef = ref(database, "recipes/" + recipeId);
+        update(recipeRef, {
+            title,
+            ingredients,
+            instructions,
+            category,
+        });
+        alert("¡Receta actualizada exitosamente!");
+    } else { // Modo de adición
+        const newRecipeRef = push(ref(database, "recipes"));
+        set(newRecipeRef, {
+            title,
+            ingredients,
+            instructions,
+            category,
+        });
+        alert("¡Receta agregada exitosamente!");
+    }
 
     recipeForm.reset();
+    delete recipeForm.dataset.id; // Limpiar el id para futuros formularios de adición
     triggerConfetti(category);
-    alert("¡Receta agregada exitosamente!");
 });
 
 onChildAdded(ref(database, "recipes"), (snapshot) => {
@@ -110,6 +121,20 @@ function displayRecipes(recipesToDisplay) {
             }
         });
 
+        const editBtn = document.createElement("button");
+        editBtn.classList.add("edit-btn");
+        editBtn.textContent = "Editar";
+        editBtn.addEventListener("click", () => {
+            recipeForm.title.value = recipe.title;
+            recipeForm.ingredients.value = recipe.ingredients;
+            recipeForm.instructions.value = recipe.instructions;
+            recipeForm.category.value = recipe.category;
+            recipeForm.dataset.id = recipe.id; // Guardar el id en el formulario para saber que es una edición
+            
+            // Desplazar la vista al formulario
+            recipeForm.scrollIntoView({ behavior: 'smooth' });
+        });
+
         const ingredientsHTML = recipe.ingredients.replace(/\n/g, "<br>");
         const instructionsHTML = recipe.instructions.replace(/\n/g, "<br>");
 
@@ -130,6 +155,7 @@ function displayRecipes(recipesToDisplay) {
         });
 
         recipeItem.appendChild(deleteBtn);
+        recipeItem.appendChild(editBtn);
         recipeList.appendChild(recipeItem);
     });
 }
