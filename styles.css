@@ -337,7 +337,7 @@ input[type="text"], textarea {
 .tab-button[data-category="Panaderia"] {
   background-color: #F3A90A; /* NARANJA */
 }
-
+/* INICIO BOTON ELIMINAR */
 .delete-btn {
   align-items: center;
   background-color: #FFE7E7;
@@ -350,14 +350,13 @@ input[type="text"], textarea {
   display: flex;
   font-size: 1rem;
   font-weight: 700;
-  line-height: 33.4929px;
-  list-style: outside url(https://www.smashingmagazine.com/images/bullet.svg) none;
-  padding: 2px 12px;
+  line-height: 33.5px; /* Asegurar consistencia en altura de línea */
+  padding: 2px 12px; /* Consistente con el botón de editar */
   text-align: left;
   text-decoration: none;
   text-shadow: none;
   text-underline-offset: 1px;
-  transition: border .2s ease-in-out,box-shadow .2s ease-in-out;
+  transition: border .2s ease-in-out, box-shadow .2s ease-in-out;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -389,6 +388,60 @@ input[type="text"], textarea {
   box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
   color: #FFFFFF;
 }
+
+/* FIN BOTON ELIMINAR */
+
+/* INICIO BOTON EDITAR */
+
+.edit-btn {
+  background-color: #e7ffec; /* color de fondo en tono pastel verde */
+  color: #34a84d; /* color del texto en tono verde */
+  padding: 2px 12px; /* Relleno idéntico al botón eliminar */
+  border-radius: 11px; /* Bordes redondeados similares */
+  border: 1px solid #e0ffe0; /* Borde similar al botón eliminar */
+  cursor: pointer; /* Cursor en forma de puntero */
+  font-size: 1rem; /* Tamaño de fuente consistente */
+  font-weight: 700; /* Grosor de la fuente */
+  line-height: 33.5px; /* Altura de línea consistente */
+  display: flex; /* Alineación similar */
+  align-items: center; /* Alineación de contenido */
+  box-sizing: border-box; /* Caja con borde incluido */
+  text-align: left; /* Texto alineado a la izquierda */
+  white-space: nowrap; /* Evitar que el texto se parta */
+  word-break: break-word; /* Evitar la ruptura de palabras */
+  transition: border .2s ease-in-out, box-shadow .2s ease-in-out; /* Transición suave */
+  user-select: none; /* Evitar la selección de texto */
+  touch-action: manipulation; /* Para pantallas táctiles */
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px 0; /* Sombra ligera */
+}
+
+.edit-btn:active,
+.edit-btn:hover,
+.edit-btn:focus {
+  outline: 0;
+}
+
+.edit-btn:active {
+  background-color: #a4f3b8; /* color de fondo activo */
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+  color: #FFFFFF; /* color del texto cuando está activo */
+}
+
+.edit-btn:hover {
+  background-color: #d7ffe3; /* color de fondo en hover */
+  border-color: #a4f3a4; /* color del borde en hover */
+}
+
+.edit-btn:active:hover,
+.edit-btn:focus:hover,
+.edit-btn:focus {
+  background-color: #a4f3b8; /* color de fondo en hover y activo */
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+  color: #FFFFFF; /* color del texto en hover y activo */
+}
+
+/*  FIN BOTON EDITAR */
+
 
 #confetti-container {
   position: fixed;
