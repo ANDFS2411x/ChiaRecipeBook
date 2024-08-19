@@ -10,12 +10,12 @@ import {
 
 // Tu configuración de Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyCx14X4fsm-EnUOZNfCdQaUuGXfUGqeLi0",
-  authDomain: "basededatoschiaagosto.firebaseapp.com",
-  projectId: "basededatoschiaagosto",
-  storageBucket: "basededatoschiaagosto.appspot.com",
-  messagingSenderId: "561016880327",
-  appId: "1:561016880327:web:e27178721624de6f8592e2"
+  apiKey: "AIzaSyAwN3qxXxNSrDkld5tL_KhZuquKJU5PA5U",
+  authDomain: "basededatosseptiembre.firebaseapp.com",
+  projectId: "basededatosseptiembre",
+  storageBucket: "basededatosseptiembre.appspot.com",
+  messagingSenderId: "274917255111",
+  appId: "1:274917255111:web:f2043d88ca8b566b2d1be2"
 };
 
 
