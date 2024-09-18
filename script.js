@@ -7,10 +7,11 @@ import {
     onChildAdded,
     remove,
     update,
-    onChildChanged
+    onChildChanged,
+    onChildRemoved
 } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
 
-// configuración de Firebase
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDtm7GfGFosRrC_yb2_KgGnitjJBKic_Xk",
   authDomain: "basededatoschiaoctubre.firebaseapp.com",
@@ -20,7 +21,7 @@ const firebaseConfig = {
   appId: "1:119608084530:web:24b8a3e58946047dc8542b"
 };
 
-// Inicializa Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
@@ -41,7 +42,7 @@ recipeForm.addEventListener("submit", (event) => {
     const recipeId = recipeForm.dataset.id;
 
     if (!title || !ingredients || !instructions || !category) {
-        alert("Por favor, completa todos los campos.");
+        showNotification("Por favor, completa todos los campos.", "error");
         return;
     }
 
@@ -53,8 +54,8 @@ recipeForm.addEventListener("submit", (event) => {
             instructions,
             category,
         });
-        alert("¡Receta actualizada exitosamente!");
-        addRecipeBtn.querySelector('.button-82-front').textContent = '¡Agregar!';
+        showNotification("¡Receta actualizada exitosamente!", "success");
+        addRecipeBtn.querySelector('.button-fancy-text').textContent = '¡Agregar!';
     } else {
         const newRecipeRef = push(ref(database, "recipes"));
         set(newRecipeRef, {
@@ -63,12 +64,12 @@ recipeForm.addEventListener("submit", (event) => {
             instructions,
             category,
         });
-        alert("¡Receta agregada exitosamente!");
+        showNotification("¡Receta agregada exitosamente!", "success");
     }
 
     recipeForm.reset();
     delete recipeForm.dataset.id;
-    triggerConfetti(category);
+    triggerConfetti();
 });
 
 onChildAdded(ref(database, "recipes"), (snapshot) => {
@@ -86,7 +87,12 @@ onChildChanged(ref(database, "recipes"), (snapshot) => {
     }
 });
 
-searchBar.addEventListener("input", (e) => {
+onChildRemoved(ref(database, "recipes"), (snapshot) => {
+    recipes = recipes.filter(recipe => recipe.id !== snapshot.key);
+    displayRecipes(recipes);
+});
+
+searchBar.addEventListener("input", () => {
     filterAndDisplayRecipes();
 });
 
@@ -112,91 +118,120 @@ function filterAndDisplayRecipes(category = 'all') {
     });
 
     displayRecipes(filteredRecipes);
+    
+    // Highlight search terms
+    if (searchTerm) {
+        highlightSearchTerms(searchTerm);
+    }
 }
 
 function displayRecipes(recipesToDisplay) {
     recipeList.innerHTML = "";
     recipesToDisplay.forEach(recipe => {
-        const recipeItem = document.createElement("li");
-        recipeItem.classList.add("recipe");
-        recipeItem.setAttribute('data-category', recipe.category);
+        const recipeCard = document.createElement("div");
+        recipeCard.classList.add("recipe-card");
 
-        const deleteBtn = document.createElement("button");
-        deleteBtn.classList.add("delete-btn");
-        deleteBtn.textContent = "Eliminar";
-        deleteBtn.addEventListener("click", () => {
-            const confirmation = confirm("¿Estás seguro de que deseas eliminar esta receta?");
-            if (confirmation) {
-                remove(ref(database, "recipes/" + recipe.id));
-                recipes = recipes.filter(r => r.id !== recipe.id);
-                displayRecipes(recipes);
+        const ingredientsHTML = recipe.ingredients.replace(/\n/g, "<br>");
+        const instructionsHTML = recipe.instructions.replace(/\n/g, "<br>");
+
+        recipeCard.innerHTML = `
+            <h3>${recipe.title}</h3>
+            <div class="recipe-content">
+                <div class="recipe-category">${recipe.category}</div>
+                <div class="recipe-details">
+                    <h4>Ingredientes:</h4>
+                    <p>${ingredientsHTML}</p>
+                    <h4>Instrucciones:</h4>
+                    <p>${instructionsHTML}</p>
+                </div>
+                <div class="recipe-actions">
+                    <button class="edit-btn">Editar</button>
+                    <button class="delete-btn">Eliminar</button>
+                </div>
+            </div>
+        `;
+
+        recipeCard.addEventListener("click", (e) => {
+            if (!e.target.classList.contains('edit-btn') && !e.target.classList.contains('delete-btn')) {
+                recipeCard.querySelector(".recipe-details").classList.toggle("active");
             }
         });
 
-        const editBtn = document.createElement("button");
-        editBtn.classList.add("edit-btn");
-        editBtn.textContent = "Editar";
-        editBtn.addEventListener("click", () => {
+        recipeCard.querySelector('.delete-btn').addEventListener("click", (e) => {
+            e.stopPropagation();
+            const confirmation = confirm("¿Estás seguro de que deseas eliminar esta receta?");
+            if (confirmation) {
+                remove(ref(database, "recipes/" + recipe.id));
+                showNotification("Receta eliminada exitosamente", "info");
+            }
+        });
+
+        recipeCard.querySelector('.edit-btn').addEventListener("click", (e) => {
+            e.stopPropagation();
             recipeForm.title.value = recipe.title;
             recipeForm.ingredients.value = recipe.ingredients;
             recipeForm.instructions.value = recipe.instructions;
             recipeForm.category.value = recipe.category;
             recipeForm.dataset.id = recipe.id;
-            addRecipeBtn.querySelector('.button-82-front').textContent = 'Actualizar';
+            addRecipeBtn.querySelector('.button-fancy-text').textContent = 'Actualizar';
             
             recipeForm.scrollIntoView({ behavior: 'smooth' });
         });
 
-        const ingredientsHTML = recipe.ingredients.replace(/\n/g, "<br>");
-        const instructionsHTML = recipe.instructions.replace(/\n/g, "<br>");
-
-        recipeItem.innerHTML = `
-            <h2>${recipe.title}</h2>
-            <div class="recipe-details">
-                <h3>Categoría: ${recipe.category}</h3>
-                <h3>Ingredientes:</h3>
-                <p>${ingredientsHTML}</p>
-                <h3>Instrucciones:</h3>
-                <p>${instructionsHTML}</p>
-            </div>
-        `;
-
-        recipeItem.addEventListener("click", () => {
-            const recipeDetails = recipeItem.querySelector(".recipe-details");
-            recipeDetails.classList.toggle("active");
-        });
-
-        recipeItem.appendChild(deleteBtn);
-        recipeItem.appendChild(editBtn);
-        recipeList.appendChild(recipeItem);
+        recipeList.appendChild(recipeCard);
     });
 }
 
 function formatIngredients(ingredients) {
-    return ingredients.split('\n').map(ingredient => `• ${ingredient}`).join('\n');
+    return ingredients.split('\n').map(ingredient => ingredient.trim()).filter(ingredient => ingredient !== '').map(ingredient => `• ${ingredient}`).join('\n');
 }
 
-function triggerConfetti(category) {
-    const confettiType = {
-        "Pasteleria Plant Based": "🍓",
-        "Cocina Plant Based": "🌱",
-        "Cocina Vegetariana": "🌿",
-        "Pasteleria": "🎂",
-        "Panaderia": "🥐"
-    };
+function triggerConfetti() {
+    const confettiContainer = document.getElementById('confetti-container');
+    confettiContainer.innerHTML = '';
 
-    const confettiSymbol = confettiType[category] || "✨";
-
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 50; i++) {
         const confetti = document.createElement('div');
         confetti.classList.add('confetti');
-        confetti.innerText = confettiSymbol;
-        confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.animationDuration = Math.random() * 2 + 3 + 's';
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.animationDuration = `${Math.random() * 2 + 2}s`;
+        confetti.style.animationDelay = `${Math.random() * 2}s`;
+        confetti.style.backgroundColor = getRandomColor();
         confettiContainer.appendChild(confetti);
     }
 
     setTimeout(() => {
         confettiContainer.innerHTML = '';
     }, 5000);
+}
+
+function getRandomColor() {
+    const colors = ['#ff85a2', '#ffc2d1', '#ff5c8a', '#ffb3ba', '#a8e6cf'];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.classList.add('show');
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }, 100);
+}
+
+function highlightSearchTerms(searchTerm) {
+    const recipeCards = document.querySelectorAll('.recipe-card');
+    recipeCards.forEach(card => {
+        const content = card.innerHTML;
+        const highlightedContent = content.replace(new RegExp(searchTerm, 'gi'), match => `<mark>${match}</mark>`);
+        card.innerHTML = highlightedContent;
+    });
 }
