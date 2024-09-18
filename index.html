@@ -7,67 +7,81 @@
     <title>Recetario de Chía</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/jpeg" href="images/8ce655dde3e1c7c681bfc9812a0711e7.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- Titulo de la pagina -->
-    <h1>Recetario de Chía</h1>
+    <header>
+        <div class="header-content">
+            <h1>Recetario de Chía</h1>
+        
 
-    <!-- Barra de búsqueda -->
-    <div class="search-container">
-        <input type="text" id="searchBar" placeholder="Buscar recetas..." aria-label="Buscar recetas">
-    </div>
+        </div>
+    </header>
 
-    <!-- Pestañas para categorías -->
-    <div class="tabs">
-        <button class="tab-button active" data-category="all">Todas las categorías</button>
-        <button class="tab-button" data-category="Pasteleria Plant Based">Pastelería Plant Based</button>
-        <button class="tab-button" data-category="Cocina Plant Based">Cocina Plant Based</button>
-        <button class="tab-button" data-category="Cocina Vegetariana">Cocina Vegetariana</button>
-        <button class="tab-button" data-category="Pasteleria">Pastelería</button>
-        <button class="tab-button" data-category="Panaderia">Panadería</button>
-    </div>
+    <nav>
+        <div class="search-container">
+            <input type="text" id="searchBar" placeholder="Buscar recetas..." aria-label="Buscar recetas">
+            <i class="fas fa-search search-icon"></i>
+        </div>
 
-    <div class="container">
-        <form id="recipeForm" novalidate>
-            <div class="form-group">
-                <label for="title">Título de la receta:</label>
-                <input type="text" id="title" name="title" required>
-            </div>
-            <div class="form-group">
-                <label for="ingredients">Ingredientes:</label>
-                <textarea id="ingredients" name="ingredients" rows="4" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="instructions">Instrucciones:</label>
-                <textarea id="instructions" name="instructions" rows="4" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="category">Categoría:</label>
-                <select id="category" name="category" required>
-                    <option value="">Todas las categorías</option>
-                    <option value="Pasteleria Plant Based">Pastelería Plant Based</option>
-                    <option value="Cocina Plant Based">Cocina Plant Based</option>
-                    <option value="Cocina Vegetariana">Cocina Vegetariana</option>
-                    <option value="Pasteleria">Pastelería</option>
-                    <option value="Panaderia">Panadería</option>
-                </select>
-            </div>
-            <div class="center-button">
-                <button id="addRecipeBtn" class="button-82-pushable" role="button">
-                    <span class="button-82-shadow"></span>
-                    <span class="button-82-edge"></span>
-                    <span class="button-82-front text">
-                        ¡Agregar!
-                    </span>
-                </button>
-            </div>
-        </form>
-        <ul id="recipeList"></ul>
-    </div>
+        <div class="tabs">
+            <button class="tab-button active" data-category="all">Todas</button>
+            <button class="tab-button" data-category="Pasteleria Plant Based">Pastelería Plant Based</button>
+            <button class="tab-button" data-category="Cocina Plant Based">Cocina Plant Based</button>
+            <button class="tab-button" data-category="Cocina Vegetariana">Cocina Vegetariana</button>
+            <button class="tab-button" data-category="Pasteleria">Pastelería</button>
+            <button class="tab-button" data-category="Panaderia">Panadería</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="addRecipeSection">
+            <h2>Agregar Nueva Receta</h2>
+            <form id="recipeForm" novalidate>
+                <div class="form-group">
+                    <label for="title">Título de la receta:</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="ingredients">Ingredientes:</label>
+                    <textarea id="ingredients" name="ingredients" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="instructions">Instrucciones:</label>
+                    <textarea id="instructions" name="instructions" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="category">Categoría:</label>
+                    <select id="category" name="category" required>
+                        <option value="">Selecciona una categoría</option>
+                        <option value="Pasteleria Plant Based">Pastelería Plant Based</option>
+                        <option value="Cocina Plant Based">Cocina Plant Based</option>
+                        <option value="Cocina Vegetariana">Cocina Vegetariana</option>
+                        <option value="Pasteleria">Pastelería</option>
+                        <option value="Panaderia">Panadería</option>
+                    </select>
+                </div>
+                <div class="center-button">
+                    <button id="addRecipeBtn" class="button-fancy" type="submit">
+                        <span class="button-fancy-text">¡Agregar!</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <section id="recipeListSection">
+            <h2>Recetas</h2>
+            <div id="recipeList" class="recipe-grid"></div>
+        </section>
+    </main>
 
     <div id="confetti-container"></div>
 
-    <!-- Script for database in Firebase Realtime Database -->
+    <footer>
+        <p>&copy; 2024 Recetario de Chía. Todos los derechos reservados.</p>
+    </footer>
+
     <script type="module" src="script.js"></script>
 </body>
 </html>
