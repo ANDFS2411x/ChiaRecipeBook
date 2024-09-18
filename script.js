@@ -10,14 +10,14 @@ import {
     onChildChanged
 } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
 
-// Tu configuración de Firebase
+// configuración de Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyAwN3qxXxNSrDkld5tL_KhZuquKJU5PA5U",
-  authDomain: "basededatosseptiembre.firebaseapp.com",
-  projectId: "basededatosseptiembre",
-  storageBucket: "basededatosseptiembre.appspot.com",
-  messagingSenderId: "274917255111",
-  appId: "1:274917255111:web:f2043d88ca8b566b2d1be2"
+  apiKey: "AIzaSyDtm7GfGFosRrC_yb2_KgGnitjJBKic_Xk",
+  authDomain: "basededatoschiaoctubre.firebaseapp.com",
+  projectId: "basededatoschiaoctubre",
+  storageBucket: "basededatoschiaoctubre.appspot.com",
+  messagingSenderId: "119608084530",
+  appId: "1:119608084530:web:24b8a3e58946047dc8542b"
 };
 
 // Inicializa Firebase
