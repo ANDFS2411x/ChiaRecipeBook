@@ -12,21 +12,15 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
 
 // Firebase configuration
-// Import the functions you need from the SDKs you need
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAhvOfRl1ItuWTwvZcQcqCs4qh1CVXfEpo",
   authDomain: "basededatoschiano.firebaseapp.com",
+  databaseURL: "https://basededatoschiano-default-rtdb.firebaseio.com",
   projectId: "basededatoschiano",
   storageBucket: "basededatoschiano.appspot.com",
   messagingSenderId: "247046685422",
   appId: "1:247046685422:web:885d92f8bdee80a356a9ff"
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
