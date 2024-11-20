@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import {
     getDatabase,
     ref,
@@ -12,16 +12,17 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
 
 // Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAhvOfRl1ItuWTwvZcQcqCs4qh1CVXfEpo",
-  authDomain: "basededatoschiano.firebaseapp.com",
-  databaseURL: "https://basededatoschiano-default-rtdb.firebaseio.com",
-  projectId: "basededatoschiano",
-  storageBucket: "basededatoschiano.appspot.com",
-  messagingSenderId: "247046685422",
-  appId: "1:247046685422:web:885d92f8bdee80a356a9ff"
-};
-// Initialize Firebase
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDIPYuY6Q7ZmDZbVW_viovGT6bkQZ4CKn0",
+    authDomain: "basedatosdiciembre.firebaseapp.com",
+    projectId: "basedatosdiciembre",
+    storageBucket: "basedatosdiciembre.firebasestorage.app",
+    messagingSenderId: "231960733680",
+    appId: "1:231960733680:web:d19b3d329a4db486fe5f35"
+  };
+
+
 
 
 // Initialize Firebase
