@@ -9,7 +9,7 @@ import {
     update,
     onChildChanged,
     onChildRemoved
-} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
 // Firebase configuration
 
@@ -21,9 +21,6 @@ import {
     messagingSenderId: "231960733680",
     appId: "1:231960733680:web:d19b3d329a4db486fe5f35"
   };
-
-
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
