@@ -13,14 +13,14 @@ import {
 
 // Firebase configuration
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDIPYuY6Q7ZmDZbVW_viovGT6bkQZ4CKn0",
-    authDomain: "basedatosdiciembre.firebaseapp.com",
-    projectId: "basedatosdiciembre",
-    storageBucket: "basedatosdiciembre.firebasestorage.app",
-    messagingSenderId: "231960733680",
-    appId: "1:231960733680:web:d19b3d329a4db486fe5f35"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyA6xqmLGw9rWcvHNujbvUbt0tYQWbYfhYE",
+  authDomain: "chiarecipebuk2.firebaseapp.com",
+  projectId: "chiarecipebuk2",
+  storageBucket: "chiarecipebuk2.firebasestorage.app",
+  messagingSenderId: "201615011779",
+  appId: "1:201615011779:web:00c2517dc333910348d776"
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
