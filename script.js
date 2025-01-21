@@ -14,12 +14,12 @@ import {
 // Firebase configuration
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA6xqmLGw9rWcvHNujbvUbt0tYQWbYfhYE",
-  authDomain: "chiarecipebuk2.firebaseapp.com",
-  projectId: "chiarecipebuk2",
-  storageBucket: "chiarecipebuk2.firebasestorage.app",
-  messagingSenderId: "201615011779",
-  appId: "1:201615011779:web:00c2517dc333910348d776"
+  apiKey: "AIzaSyAIkarXRk4MpBossg3Z2ICJ4ObiULEIVDs",
+  authDomain: "basedatoschiaenero2025.firebaseapp.com",
+  projectId: "basedatoschiaenero2025",
+  storageBucket: "basedatoschiaenero2025.firebasestorage.app",
+  messagingSenderId: "947921580458",
+  appId: "1:947921580458:web:c8c876317ae8f600aa3bd3"
 };
 
 // Initialize Firebase
