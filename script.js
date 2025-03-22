@@ -14,12 +14,13 @@ import {
 // Firebase configuration
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBTjCcg7YdhceEEjgcmlafUb19jcQ84IUI",
-  authDomain: "basededatosfeb-marzo.firebaseapp.com",
-  projectId: "basededatosfeb-marzo",
-  storageBucket: "basededatosfeb-marzo.firebasestorage.app",
-  messagingSenderId: "481293920297",
-  appId: "1:481293920297:web:d97768dabb0d76a7db1438"
+  apiKey: "AIzaSyD9K2U7tAMtfB_9J7aaOHvZAfxecUMlcBU",
+  authDomain: "basededatoschiamarch-abril.firebaseapp.com",
+  databaseURL: "https://basededatoschiamarch-abril-default-rtdb.firebaseio.com",
+  projectId: "basededatoschiamarch-abril",
+  storageBucket: "basededatoschiamarch-abril.firebasestorage.app",
+  messagingSenderId: "896855808341",
+  appId: "1:896855808341:web:c7feb27a142567468cf7dc"
 };
 
 // Initialize Firebase
